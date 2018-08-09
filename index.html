@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>bai10-AJAX</title>
+</head>
+<body>
+	<input type="text" id="new-Item">
+	<button id="add-btn">Add</button>
+	<ul id="todo-list">
+		
+	</ul>
+
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script type="text/javascript">
+		var url ='http://localhost:9081/todos'
+		axios.get(url).then(function(res){
+			var items = res.data;
+			console.log('data loaded',items);
+			render(items);
+
+		})
+		var storageKey= 'todo-List';
+		var dataString = localStorage.getItem(storageKey);
+		var htmlList = document.getElementById('todo-list');
+		var todoList;
+
+		if(dataString){
+			todoList = JSON.parse(dataString);
+		}else{
+			todoList=[];
+		};
+
+		var input = document.getElementById('new-Item');
+		var addBtn = document.getElementById('add-btn');
+		
+		
+
+		 addBtn.addEventListener('click',addItem);
+		 input.addEventListener('change',updateSessionStorage);
+		 input.value = sessionStorage.getItem('draft');
+		 htmlList.addEventListener('click',onListClicked);
+
+
+
+		function updateSessionStorage(){
+			sessionStorage.setItem('draft',input.value);
+
+
+		}
+
+		function onListClicked(event){
+			var button = event.target;
+			var i = parseInt(button.dataset.id);
+			todoList.splice(i,1);
+			render();
+			localStorage.setItem(storageKey,JSON.stringify(todoList));
+
+		}
+
+
+
+		function addItem () {
+			var input = document.getElementById('new-Item');
+			//get input
+			var newItem = input.value;
+			todoList.push(newItem);
+			localStorage.setItem(storageKey,JSON.stringify(todoList));
+			input.value = '';
+			render();
+			};
+
+			// function deleteItem(id){
+			// 	var index = parseInt(id);
+			// 	console.log(index);
+			// 	todoList.splice(index,1);
+			// };
+
+
+		function render(items){
+			var i = 0;
+			var htmlList = document.getElementById('todo-list');
+
+			var content = todoList.map(function(item){
+				var bString = '<button data-id="'+ i+'" >Delete</button>'
+			return '<li id="li'+ i++ + '" >' + item.content + bString +'</li>';
+			});
+			htmlList.innerHTML = content.join('');
+
+		};
+		// render();
+
+
+	</script>
+</body>
+</html>

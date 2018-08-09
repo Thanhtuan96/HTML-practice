@@ -1,0 +1,7 @@
+{
+	"todos":[
+		{ "id":1,"content":"go to work"},
+		{ "id":2,"content":"take a shower"},
+		{ "id":3,"content":"hav a walk"}
+	]
+}
