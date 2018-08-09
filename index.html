@@ -80,14 +80,14 @@
 			var i = 0;
 			var htmlList = document.getElementById('todo-list');
 
-			var content = todoList.map(function(item){
+			var content = todoList.map(function(items){
 				var bString = '<button data-id="'+ i+'" >Delete</button>'
 			return '<li id="li'+ i++ + '" >' + item.content + bString +'</li>';
 			});
 			htmlList.innerHTML = content.join('');
 
 		};
-		// render();
+		// render(items);
 
 
 	</script>
